@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Healthnomic</title>
+  <link rel="icon" href="D:\Healthnomic\Frontend\images\logo.png">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+  <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'css/scan.css' %}">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat|Ubuntu" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap" rel="stylesheet">
+</head>
+<style>
+  .pre {
+    height:330px;
+    width: 270px;
+    margin:9px 6px 33px 141px;
+  
+  }
+</style>
+<SCRIPT>
+  function Show()
+  {
+      var x = document.getElementById("Output");
+      if (x.style.display === "none") {
+        x.style.display = "block";
+      } else {
+        x.style.display = "";
+      }
+    
+  }
+</SCRIPT>
+
+<body>
+  {% block main %}
+
+  <section id="title">
+    <div class="container-fluid">
+
+      <!-- Nav Bar -->
+      <nav class="navbar  navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="">
+          <img src="{% static 'Images/logo.png' %}" height="24px" width="30px">
+          Healthnomic</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'Home' %}">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'Browse' %}">Browse</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="">Scan</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'about_us' %}">About Us</a>
+            </li>
+          </ul>
+
+      </nav>
+        </div>
+
+</section>
+<!--heading-->
+   <section id="heading">
+     <div class="container-fluid">
+       <div class="Big-Heading">
+         <h1 class="head">X-Ray Image Classifier</h1>
+         <p class="para1">Upload the chest X-Ray by clicking on the <strong><em>Upload</em></strong> to know about the infection<em>(Pneumaonia/Covid-19)</em> </p>
+
+       </div>
+
+<form method="post" enctype="multipart/form-data" action="predictImage">
+   <div class="upload" style="padding: 20px;">
+      <div style="margin-top: -30px;">
+        {% csrf_token %}
+        <label for="fname"></label> 
+        </div> 
+        <input name="filePath" type="file" required><br><br>
+       <br>
+        <input type="submit" class="btn btn-danger btn-lg btn-block" value="Upload">
+        </div>
+</section>
+
+<!--output-->
+<section id="Output">
+  <div class="container-fluid">
+      <div class="alert alert-success head " role="alert" style="margin-top: 30px;">
+        <h2>The predicted infection is {{predictedLabel}}.</h2>
+            <img src="{{filePathName}}" alt="Uploaded image" class="pre">
+              
+        <p style="margin-top: 20px; font-size: 20px;">The application detects the presence of pneumonia or Covid-19 from chest X-rays which helps in quick decision making for the patients. This saves time for the doctor and can act quickly without further ado.</p>
+    </div>
+
+
+  </div>
+
+</section>
+<section id="footer">
+  <div class="container-fluid foot"><h3><span>Disclaimer:</span>  &nbsp &nbsp For Confirmation Please Consult your Doctor!!!</h3></div>
+
+</section>
+{% endblock %}
+
+</body>
+</html>
